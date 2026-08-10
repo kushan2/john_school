@@ -169,14 +169,36 @@
 
 
 
+/* ── Mobile icon bars (hidden on desktop) ── */
+.mobile-nav { display: none; }
+
 /* ── Mobile ── */
 @media (max-width: 768px) {
-    .sidebar { transform: translateX(calc(-1 * var(--sidebar-w))); }
-    .sidebar.open { transform: translateX(0); }
-    .topbar { display: flex; }
-    .main { margin-left: 0; padding: 80px 20px 28px; }
+    /* Replace hamburger sidebar with fixed icon bars */
+    .sidebar, .topbar, .overlay { display: none !important; }
+
+    .main { margin-left: 0; padding: 78px 16px 88px; }
+
+    .mobile-nav {
+        display: flex; align-items: stretch; justify-content: space-around;
+        position: fixed; left: 0; right: 0; height: 64px;
+        background: var(--surface); z-index: 120;
     }
-    
+    .mobile-nav.top    { top: 0;    border-bottom: 1px solid var(--border); }
+    .mobile-nav.bottom { bottom: 0; border-top: 1px solid var(--border); }
+
+    .mobile-nav a {
+        flex: 1; display: flex; flex-direction: column;
+        align-items: center; justify-content: center; gap: 4px;
+        color: #cdd8ea; text-decoration: none;
+        font-size: 10px; font-weight: 600; letter-spacing: .03em; text-transform: uppercase;
+        padding: 4px 2px; text-align: center;
+    }
+    .mobile-nav a svg { width: 22px; height: 22px; flex-shrink: 0; }
+    .mobile-nav a.active { color: #fff; }
+    .mobile-nav a.active svg { stroke: var(--accent2); }
+    }
+
 
 </style>
 </head>
@@ -187,6 +209,38 @@
 
 
 <body>
+
+{{-- Mobile icon nav — top 3 icons (edit the 6 links here to change which pages show) --}}
+<nav class="mobile-nav top">
+    <a href="{{ route('pages.dashboard') }}" class="{{ request()->routeIs('pages.dashboard') ? 'active' : '' }}">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+        Chat
+    </a>
+    <a href="{{ route('pages.messages') }}" class="{{ request()->routeIs('pages.messages') ? 'active' : '' }}">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-6l-2 3h-4l-2-3H2"/><path d="M5.45 5.11 2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z"/></svg>
+        Inbox
+    </a>
+    <a href="{{ route('pages.connections') }}" class="{{ request()->routeIs('pages.connections') ? 'active' : '' }}">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        Connect
+    </a>
+</nav>
+
+{{-- Mobile icon nav — bottom 3 icons --}}
+<nav class="mobile-nav bottom">
+    <a href="{{ route('pages.events') }}" class="{{ request()->routeIs('pages.events') ? 'active' : '' }}">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+        Events
+    </a>
+    <a href="{{ route('pages.groups') }}" class="{{ request()->routeIs('pages.groups') ? 'active' : '' }}">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 21a8 8 0 0 0-16 0"/><circle cx="10" cy="8" r="5"/><path d="M22 20c0-3.37-2-6.5-4-8a5 5 0 0 0-.45-8.3"/></svg>
+        Groups
+    </a>
+    <a href="{{ route('pages.profile') }}" class="{{ request()->routeIs('pages.profile') ? 'active' : '' }}">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+        Settings
+    </a>
+</nav>
 
 {{-- Mobile top bar --}}
 <header class="topbar">
