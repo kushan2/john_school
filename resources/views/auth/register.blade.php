@@ -51,14 +51,14 @@ body {
 .form-group { margin-bottom: 16px; }
     label { display: block; font-size: 11px; font-weight: 500; letter-spacing: .08em; text-transform: uppercase; color: var(--text-sub); margin-bottom: 7px; }
         
-    input[type=email], input[type=password], input[type=text] {
+    input[type=email], input[type=password], input[type=text], select {
             width: 100%; padding: 10px 14px;
-            background: var(--bg); border: 1px solid var(--border); 
+            background: var(--bg); border: 1px solid var(--border);
             border-radius: 7px; color: #0f4c81; font-family: inherit; font-size: 14px;
             outline: none; transition: border-color .15s, box-shadow .15s;
         }
-        
-    input:focus { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(79,142,247,.12); }
+
+    input:focus, select:focus { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(79,142,247,.12); }
         .input-error { border-color: var(--danger) !important; }
         .error-msg { font-size: 12px; color: var(--danger); margin-top: 5px; }
         .row-between { display: flex; align-items: center; justify-content: space-between; margin-bottom: 22px; }
@@ -111,6 +111,15 @@ body {
             <div class="form-group">
                 <label>Email</label>
                 <input type="email" name="email" value="{{ old('email') }}" placeholder="email@address.edu" class="{{ $errors->has('email') ? 'input-error' : '' }}" required>
+            </div>
+            <div class="form-group">
+                <label>Campus / School</label>
+                <select name="campus" class="{{ $errors->has('campus') ? 'input-error' : '' }}" required>
+                    <option value="" disabled {{ old('campus') ? '' : 'selected' }}>Select your campus…</option>
+                    @foreach(config('campuses.list') as $campus)
+                        <option value="{{ $campus }}" {{ old('campus') === $campus ? 'selected' : '' }}>{{ $campus }}</option>
+                    @endforeach
+                </select>
             </div>
             <div class="form-group">
                 <label>Password</label>

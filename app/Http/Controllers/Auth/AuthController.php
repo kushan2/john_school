@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Password;
+use Illuminate\Validation\Rule;
 use Illuminate\Validation\Rules\Password as PasswordRule;
 use Illuminate\Auth\Events\PasswordReset;
 use Illuminate\Support\Str;
@@ -28,17 +29,24 @@ public function register(Request $request)
 
     $validated = $request->validate([
             'name'     => ['required', 'string', 'max:255'],
-            'email'    => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            // Must be a school-issued .edu address (allows sub-domains such as
+            // student@mail.college.edu).
+            'email'    => ['required', 'string', 'email', 'max:255', 'unique:users', 'regex:/@[^@\s]+\.edu$/i'],
+            'campus'   => ['required', 'string', Rule::in(config('campuses.list'))],
             'password' => ['required', 'confirmed', PasswordRule::min(8)
                 ->mixedCase()
                 ->numbers()
                 ->symbols()
             ],
+        ], [
+            'email.regex' => 'You must register with your school-issued .edu email address.',
+            'campus.in'   => 'Please select your campus from the list.',
         ]);
 
         $user = User::create([
             'name'     => $validated['name'],
             'email'    => $validated['email'],
+            'campus'   => $validated['campus'],
             'password' => Hash::make($validated['password']),
         ]);
 
