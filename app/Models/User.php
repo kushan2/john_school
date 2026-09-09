@@ -18,6 +18,11 @@ class User extends Authenticatable
         return $this->hasMany(Classified::class);
     }
 
+    public function chatMessages(): HasMany
+    {
+        return $this->hasMany(ChatMessage::class);
+    }
+
     /**
      * The attributes that are mass assignable.
      *

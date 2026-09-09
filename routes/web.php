@@ -5,6 +5,7 @@ use App\Http\Controllers\PageController;
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\HelpTicketController;
 use App\Http\Controllers\ClassifiedController;
+use App\Http\Controllers\ChatController;
 
 
 
@@ -49,7 +50,11 @@ Route::post('/reset-password',         [AuthController::class, 'resetPassword'])
 // ── Authenticated routes ──────────────────────────────────────────────────────
 Route::middleware('auth')->group(function () {
     
-Route::get('/dashboard', [PageController::class, 'dashboard'])->name('pages.dashboard');
+// Open Chat (all-campus live stream) — the dashboard/landing page
+Route::get('/dashboard', [ChatController::class, 'index'])->name('pages.dashboard');
+Route::get('/chat/messages', [ChatController::class, 'fetch'])->name('chat.fetch');
+Route::post('/chat/messages', [ChatController::class, 'store'])->name('chat.store');
+Route::post('/chat/messages/{message}/react', [ChatController::class, 'react'])->name('chat.react');
 Route::get('/messages', [PageController::class, 'messages'])->name('pages.messages');
 Route::get('/connections', [PageController::class, 'connections'])->name('pages.connections'); 
 Route::get('/profile', [PageController::class, 'profile'])->name('pages.profile');
