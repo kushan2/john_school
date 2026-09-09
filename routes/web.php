@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\HelpTicketController;
+use App\Http\Controllers\ClassifiedController;
 
 
 
@@ -55,7 +56,13 @@ Route::get('/profile', [PageController::class, 'profile'])->name('pages.profile'
 Route::get('/events', [PageController::class, 'events'])->name('pages.events');
 Route::get('/groups', [PageController::class, 'groups'])->name('pages.groups');
 Route::get('/media', [PageController::class, 'media'])->name('pages.media');
-Route::get('/classifieds', [PageController::class, 'classifieds'])->name('pages.classifieds');
+// Classifieds / Roommates
+Route::get('/classifieds', [ClassifiedController::class, 'index'])->name('pages.classifieds');
+Route::post('/classifieds', [ClassifiedController::class, 'store'])->name('classifieds.store');
+Route::put('/classifieds/{classified}', [ClassifiedController::class, 'update'])->name('classifieds.update');
+Route::delete('/classifieds/{classified}', [ClassifiedController::class, 'destroy'])->name('classifieds.destroy');
+Route::post('/classifieds/{classified}/replies', [ClassifiedController::class, 'storeReply'])->name('classifieds.replies.store');
+Route::delete('/classified-replies/{reply}', [ClassifiedController::class, 'destroyReply'])->name('classifieds.replies.destroy');
     
     
 Route::get('/change-password',  [PageController::class, 'showChangePassword'])->name('pages.change-password');
