@@ -38,6 +38,15 @@ return [
             'report' => false,
         ],
 
+        // Private disk for user-uploaded media (Spatie "files" collection).
+        // Not web-accessible — served only via the permission-checked MediaController.
+        'media' => [
+            'driver' => 'local',
+            'root' => storage_path('app/media'),
+            'throw' => false,
+            'report' => false,
+        ],
+
         'public' => [
             'driver' => 'local',
             'root' => storage_path('app/public'),

@@ -7,6 +7,7 @@ use App\Http\Controllers\HelpTicketController;
 use App\Http\Controllers\ClassifiedController;
 use App\Http\Controllers\ChatController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\MediaController;
 
 
 
@@ -64,7 +65,12 @@ Route::put('/profile', [ProfileController::class, 'update'])->name('profile.upda
 Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 Route::get('/events', [PageController::class, 'events'])->name('pages.events');
 Route::get('/groups', [PageController::class, 'groups'])->name('pages.groups');
-Route::get('/media', [PageController::class, 'media'])->name('pages.media');
+// Media & Files
+Route::get('/media', [MediaController::class, 'index'])->name('pages.media');
+Route::post('/media', [MediaController::class, 'store'])->name('media.store');
+Route::get('/media/{media}', [MediaController::class, 'show'])->name('media.show');
+Route::get('/media/{media}/download', [MediaController::class, 'download'])->name('media.download');
+Route::delete('/media/{media}', [MediaController::class, 'destroy'])->name('media.destroy');
 // Classifieds / Roommates
 Route::get('/classifieds', [ClassifiedController::class, 'index'])->name('pages.classifieds');
 Route::post('/classifieds', [ClassifiedController::class, 'store'])->name('classifieds.store');

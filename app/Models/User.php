@@ -7,11 +7,13 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
 
-class User extends Authenticatable
+class User extends Authenticatable implements HasMedia
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
-    use HasFactory, Notifiable;
+    use HasFactory, Notifiable, InteractsWithMedia;
 
     public function classifieds(): HasMany
     {
@@ -21,6 +23,16 @@ class User extends Authenticatable
     public function chatMessages(): HasMany
     {
         return $this->hasMany(ChatMessage::class);
+    }
+
+    /**
+     * User-uploaded files live in the "files" collection on the private disk,
+     * so they are only reachable through the permission-checked MediaController
+     * (never a direct public URL).
+     */
+    public function registerMediaCollections(): void
+    {
+        $this->addMediaCollection('files')->useDisk('media');
     }
 
     /** Public URL for the user's avatar, or null to fall back to their initial. */
