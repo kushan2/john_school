@@ -11,6 +11,7 @@ use App\Http\Controllers\MediaController;
 use App\Http\Controllers\GroupController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\NewsController;
+use App\Http\Controllers\ConnectionController;
 
 
 
@@ -61,7 +62,13 @@ Route::get('/chat/messages', [ChatController::class, 'fetch'])->name('chat.fetch
 Route::post('/chat/messages', [ChatController::class, 'store'])->name('chat.store');
 Route::post('/chat/messages/{message}/react', [ChatController::class, 'react'])->name('chat.react');
 Route::get('/messages', [PageController::class, 'messages'])->name('pages.messages');
-Route::get('/connections', [PageController::class, 'connections'])->name('pages.connections'); 
+// Connections (social graph: friends, requests, block, discover)
+Route::get('/connections', [ConnectionController::class, 'index'])->name('pages.connections');
+Route::post('/connections/request/{user}', [ConnectionController::class, 'request'])->name('connections.request');
+Route::post('/connections/{connection}/accept', [ConnectionController::class, 'accept'])->name('connections.accept');
+Route::delete('/connections/{connection}', [ConnectionController::class, 'destroy'])->name('connections.destroy');
+Route::post('/connections/block/{user}', [ConnectionController::class, 'block'])->name('connections.block');
+Route::delete('/connections/block/{user}', [ConnectionController::class, 'unblock'])->name('connections.unblock');
 // Settings / Profile
 Route::get('/profile', [ProfileController::class, 'edit'])->name('pages.profile');
 Route::put('/profile', [ProfileController::class, 'update'])->name('profile.update');
