@@ -315,6 +315,10 @@ CONNECTIONS
 EVENTS
 </a>
 
+<a href="{{ route('pages.news') }}" class="nav-item {{ request()->routeIs('pages.news') || request()->routeIs('news.show') ? 'active' : '' }}">
+NEWS
+</a>
+
 <a href="{{ route('pages.groups') }}" class="nav-item {{ request()->routeIs('pages.groups') ? 'active' : '' }}">
 GROUPS
 </a>

@@ -9,6 +9,8 @@ use App\Http\Controllers\ChatController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\MediaController;
 use App\Http\Controllers\GroupController;
+use App\Http\Controllers\EventController;
+use App\Http\Controllers\NewsController;
 
 
 
@@ -64,7 +66,19 @@ Route::get('/connections', [PageController::class, 'connections'])->name('pages.
 Route::get('/profile', [ProfileController::class, 'edit'])->name('pages.profile');
 Route::put('/profile', [ProfileController::class, 'update'])->name('profile.update');
 Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-Route::get('/events', [PageController::class, 'events'])->name('pages.events');
+// Events (calendar + RSVP)
+Route::get('/events', [EventController::class, 'index'])->name('pages.events');
+Route::post('/events', [EventController::class, 'store'])->name('events.store');
+Route::get('/events/{event}', [EventController::class, 'show'])->name('events.show');
+Route::post('/events/{event}/rsvp', [EventController::class, 'rsvp'])->name('events.rsvp');
+Route::delete('/events/{event}', [EventController::class, 'destroy'])->name('events.destroy');
+
+// News
+Route::get('/news', [NewsController::class, 'index'])->name('pages.news');
+Route::post('/news', [NewsController::class, 'store'])->name('news.store');
+Route::get('/news/{news}', [NewsController::class, 'show'])->name('news.show');
+Route::put('/news/{news}', [NewsController::class, 'update'])->name('news.update');
+Route::delete('/news/{news}', [NewsController::class, 'destroy'])->name('news.destroy');
 // Groups & Clubs
 Route::get('/groups', [GroupController::class, 'index'])->name('pages.groups');
 Route::post('/groups', [GroupController::class, 'store'])->name('groups.store');

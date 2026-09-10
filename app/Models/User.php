@@ -33,6 +33,14 @@ class User extends Authenticatable implements HasMedia
             ->withTimestamps();
     }
 
+    /** Events this user has RSVP'd to (any status). */
+    public function eventRsvps(): BelongsToMany
+    {
+        return $this->belongsToMany(Event::class, 'event_rsvps')
+            ->withPivot('status')
+            ->withTimestamps();
+    }
+
     /**
      * User-uploaded files live in the "files" collection on the private disk,
      * so they are only reachable through the permission-checked MediaController
