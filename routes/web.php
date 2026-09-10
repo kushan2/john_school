@@ -8,6 +8,7 @@ use App\Http\Controllers\ClassifiedController;
 use App\Http\Controllers\ChatController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\MediaController;
+use App\Http\Controllers\GroupController;
 
 
 
@@ -64,7 +65,13 @@ Route::get('/profile', [ProfileController::class, 'edit'])->name('pages.profile'
 Route::put('/profile', [ProfileController::class, 'update'])->name('profile.update');
 Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 Route::get('/events', [PageController::class, 'events'])->name('pages.events');
-Route::get('/groups', [PageController::class, 'groups'])->name('pages.groups');
+// Groups & Clubs
+Route::get('/groups', [GroupController::class, 'index'])->name('pages.groups');
+Route::post('/groups', [GroupController::class, 'store'])->name('groups.store');
+Route::get('/groups/{group}', [GroupController::class, 'show'])->name('groups.show');
+Route::post('/groups/{group}/join', [GroupController::class, 'join'])->name('groups.join');
+Route::post('/groups/{group}/leave', [GroupController::class, 'leave'])->name('groups.leave');
+Route::delete('/groups/{group}', [GroupController::class, 'destroy'])->name('groups.destroy');
 // Media & Files
 Route::get('/media', [MediaController::class, 'index'])->name('pages.media');
 Route::post('/media', [MediaController::class, 'store'])->name('media.store');
