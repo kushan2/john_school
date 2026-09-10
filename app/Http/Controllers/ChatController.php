@@ -108,6 +108,7 @@ class ChatController extends Controller
             'name'      => $name,
             'campus'    => $message->campus,
             'initial'   => strtoupper(mb_substr($name, 0, 1)),
+            'avatar'    => $message->user?->avatarUrl(),
             'body'      => $message->body,
             'time'      => $message->created_at->diffForHumans(),
             'mine'      => $message->user_id === Auth::id(),

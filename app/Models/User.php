@@ -23,6 +23,18 @@ class User extends Authenticatable
         return $this->hasMany(ChatMessage::class);
     }
 
+    /** Public URL for the user's avatar, or null to fall back to their initial. */
+    public function avatarUrl(): ?string
+    {
+        return $this->avatar ? asset('storage/' . $this->avatar) : null;
+    }
+
+    /** First initial, used as the avatar fallback across the app. */
+    public function initial(): string
+    {
+        return strtoupper(mb_substr($this->name ?? '?', 0, 1));
+    }
+
     /**
      * The attributes that are mass assignable.
      *
@@ -32,6 +44,9 @@ class User extends Authenticatable
         'name',
         'email',
         'campus',
+        'avatar',
+        'major',
+        'bio',
         'password',
     ];
 

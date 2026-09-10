@@ -172,7 +172,16 @@
 
         const av = document.createElement('div');
         av.className = 'msg-av';
-        av.textContent = m.initial;
+        av.style.overflow = 'hidden';
+        if (m.avatar) {
+            const img = document.createElement('img');
+            img.src = m.avatar;
+            img.alt = '';
+            img.style.cssText = 'width:100%;height:100%;object-fit:cover;';
+            av.appendChild(img);
+        } else {
+            av.textContent = m.initial;
+        }
 
         const main = document.createElement('div');
         main.className = 'msg-main';

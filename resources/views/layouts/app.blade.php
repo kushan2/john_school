@@ -341,7 +341,13 @@ Change Password
 
 <div class="sidebar-footer">
 <div class="user-pill">
-<div class="avatar">{{ strtoupper(substr(Auth::user()->name, 0, 1)) }}</div>
+<div class="avatar" style="overflow:hidden;">
+@if(Auth::user()->avatarUrl())
+<img src="{{ Auth::user()->avatarUrl() }}" alt="avatar" style="width:100%;height:100%;object-fit:cover;">
+@else
+{{ strtoupper(substr(Auth::user()->name, 0, 1)) }}
+@endif
+</div>
 <div class="user-info">
 <div class="user-name">{{ Auth::user()->name }}</div>
 <div class="user-role">Sign-out</div>

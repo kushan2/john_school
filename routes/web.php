@@ -6,6 +6,7 @@ use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\HelpTicketController;
 use App\Http\Controllers\ClassifiedController;
 use App\Http\Controllers\ChatController;
+use App\Http\Controllers\ProfileController;
 
 
 
@@ -57,7 +58,10 @@ Route::post('/chat/messages', [ChatController::class, 'store'])->name('chat.stor
 Route::post('/chat/messages/{message}/react', [ChatController::class, 'react'])->name('chat.react');
 Route::get('/messages', [PageController::class, 'messages'])->name('pages.messages');
 Route::get('/connections', [PageController::class, 'connections'])->name('pages.connections'); 
-Route::get('/profile', [PageController::class, 'profile'])->name('pages.profile');
+// Settings / Profile
+Route::get('/profile', [ProfileController::class, 'edit'])->name('pages.profile');
+Route::put('/profile', [ProfileController::class, 'update'])->name('profile.update');
+Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 Route::get('/events', [PageController::class, 'events'])->name('pages.events');
 Route::get('/groups', [PageController::class, 'groups'])->name('pages.groups');
 Route::get('/media', [PageController::class, 'media'])->name('pages.media');
