@@ -6,6 +6,7 @@ use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\HelpTicketController;
 use App\Http\Controllers\ClassifiedController;
 use App\Http\Controllers\ChatController;
+use App\Http\Controllers\AssistantController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\MediaController;
 use App\Http\Controllers\GroupController;
@@ -62,6 +63,8 @@ Route::get('/chat/messages', [ChatController::class, 'fetch'])->name('chat.fetch
 Route::post('/chat/messages', [ChatController::class, 'store'])->name('chat.store');
 Route::post('/chat/messages/{message}/react', [ChatController::class, 'react'])->name('chat.react');
 Route::get('/messages', [PageController::class, 'messages'])->name('pages.messages');
+// AI Assistant (site helper — distinct from the human OPEN CHAT above)
+Route::post('/assistant/chat', [AssistantController::class, 'chat'])->name('assistant.chat');
 // Connections (social graph: friends, requests, block, discover)
 Route::get('/connections', [ConnectionController::class, 'index'])->name('pages.connections');
 Route::post('/connections/request/{user}', [ConnectionController::class, 'request'])->name('connections.request');

@@ -371,6 +371,11 @@ Change Password
     @yield('content')
 </main>
 
+{{-- AI assistant chat widget (auth-only) --}}
+@auth
+    @include('partials.assistant-widget')
+@endauth
+
 <script>
     const hamburger = document.getElementById('hamburger');
     const sidebar   = document.getElementById('sidebar');
