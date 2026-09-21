@@ -41,6 +41,11 @@
     #ai-launcher:hover { transform: scale(1.06); }
     #ai-launcher svg { width: 24px; height: 24px; }
 
+    /* When the `hidden` attribute is set, stay hidden — an id-level
+       `display:flex` below would otherwise override the attribute and
+       leave the panel permanently open (full-screen on mobile). */
+    #ai-panel[hidden] { display: none !important; }
+
     #ai-panel {
         position: fixed; right: 22px; bottom: 22px; z-index: 201;
         width: 370px; max-width: calc(100vw - 32px); height: 520px; max-height: calc(100vh - 44px);
@@ -72,7 +77,9 @@
     #ai-send:disabled { opacity: .5; cursor: default; }
 
     @media (max-width: 768px) {
-        #ai-launcher { bottom: 78px; }        /* clear the mobile bottom nav */
+        /* Hide the floating bubble on mobile so it never covers the nav —
+           open the assistant from the "Assistant" item in the mobile nav. */
+        #ai-launcher { display: none !important; }
         #ai-panel { bottom: 0; right: 0; width: 100vw; max-width: 100vw; height: 100vh; max-height: 100vh; border-radius: 0; }
     }
 </style>
@@ -93,10 +100,13 @@
     var busy     = false;
 
     function open()  { panel.hidden = false; launcher.style.display = 'none'; input.focus(); }
-    function close() { panel.hidden = true;  launcher.style.display = 'flex'; }
+    function close() { panel.hidden = true;  launcher.style.display = ''; }
 
     launcher.addEventListener('click', open);
     closeBtn.addEventListener('click', close);
+
+    // Let other UI (e.g. the mobile nav button) open the assistant.
+    window.openAssistant = open;
 
     function addMsg(text, who) {
         var el = document.createElement('div');
